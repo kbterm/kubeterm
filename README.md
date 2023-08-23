@@ -1,6 +1,6 @@
 # Kubeterm
 
-Kubeterm is a graphical (GUI) management tool for kuberntes cluster. It provides a good visibility into k8s clusters to ease user's operation and troubleshooting.
+Kubeterm is a graphical (GUI) management tool for kubernetes cluster. It provides a good visibility into k8s clusters and ease user's operation & troubleshooting.
 
 ## Feature
 
