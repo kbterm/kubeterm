@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Kubeterm</title>
+    <link>https://www.kubeterm.com/</link>
+    <description>Recent content on Kubeterm</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language><atom:link href="https://www.kubeterm.com/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Coming soon</title>
+      <link>https://www.kubeterm.com/download/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://www.kubeterm.com/download/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title></title>
+      <link>https://www.kubeterm.com/privacy/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://www.kubeterm.com/privacy/</guid>
+      <description>Privacy Policy
+We built the KubeTerm app, and this SERVICE is provided by us and is intended for use as is.</description>
+    </item>
+    
+    <item>
+      <title></title>
+      <link>https://www.kubeterm.com/terms/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://www.kubeterm.com/terms/</guid>
+      <description>Terms &amp;amp; Conditions
+By downloading or using KubeTerm, these terms will automatically apply to you – you should make sure therefore that you read them carefully before using the app.</description>
+    </item>
+    
+  </channel>
+</rss>
