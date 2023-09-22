@@ -1,0 +1,10 @@
+name: Support Request
+description: Support request or question
+labels: kind/question
+body:
+  - type: textarea
+    id: question
+    attributes:
+      label: Any question?
+    validations:
+      required: true
