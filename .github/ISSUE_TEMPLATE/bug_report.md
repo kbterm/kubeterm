@@ -1,12 +1,3 @@
----
-name: Bug report
-about: Report a bug to this project
-title: ''
-labels: ''
-assignees: ''
-
----
-
 name: Bug Report
 description: Report a bug
 labels: kind/bug
