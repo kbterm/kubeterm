@@ -1,12 +1,13 @@
 name: Feature request
 description: Provide details for a feature
+title: "[Feature]: "
 labels: kind/enhancement
 body:
   - type: textarea
     id: feature
     attributes:
       label: What would you like to be added?
-      description: Describe detailed functionality of the feature you request.
+      description: Describe detailed functionality of this feature you request.
     validations:      
       required: true
 
