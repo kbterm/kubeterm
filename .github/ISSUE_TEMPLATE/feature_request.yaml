@@ -2,7 +2,7 @@ name: Feature request
 description: Provide details for a feature
 labels: kind/enhancement
 body:
-  - type: markdown
+  - type: textarea
     id: feature
     attributes:
       label: What would you like to be added?
