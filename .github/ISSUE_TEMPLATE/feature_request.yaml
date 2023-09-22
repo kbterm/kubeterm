@@ -11,12 +11,11 @@ name: Feature request
 description: Provide details for a feature
 labels: kind/enhancement
 body:
-  - type: textarea
+  - type: markdown
     id: feature
     attributes:
       label: What would you like to be added?
-      description: |
-        Describe functionality of the feature you request, as much details as you can.
+      description: Describe functionality of the feature you request.
       required: true
 
   - type: textarea
