@@ -1,5 +1,5 @@
 name: Bug Report
-description: Report a bug
+description: File a bug report
 title: "[Bug]: "
 labels: kind/bug
 body:
@@ -15,8 +15,7 @@ body:
     id: version
     attributes:
       label: App version
-      value: |
-        Settings -> About
+      description: Please provide App version, Settings -> About.
     validations:
       required: true
 
@@ -32,6 +31,6 @@ body:
     id: cloudProvider
     attributes:
       label: Cloud provider
-      description: Please provide cloud provider info, if this issue is related to kubernetes cluster from a cloud provider.
+      description: Please provide cloud provider, if the bug is related to a cluster of some cloud provider.
     validations:
       required: false
