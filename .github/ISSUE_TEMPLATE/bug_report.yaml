@@ -1,8 +1,9 @@
 name: Bug Report
 description: Report a bug
+title: "[Bug]: "
 labels: kind/bug
 body:
-  - type: markdown
+  - type: textarea
     id: problem
     attributes:
       label: What happened?
@@ -15,7 +16,7 @@ body:
     attributes:
       label: App version
       value: |
-        Setting -> About
+        Settings -> About
     validations:
       required: true
 
@@ -23,9 +24,9 @@ body:
     id: platform
     attributes:
       label: Platform OS type
-      description: "Please provide OS type: ios, android, macos, etc."
+      description: Please provide OS type, ios, android, macos, etc.
     validations:
-      required: true      
+      required: true
 
   - type: textarea
     id: cloudProvider
