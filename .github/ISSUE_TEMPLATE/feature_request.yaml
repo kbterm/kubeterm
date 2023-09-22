@@ -1,12 +1,3 @@
----
-name: Feature request
-about: Request a feature for this project
-title: ''
-labels: ''
-assignees: ''
-
----
-
 name: Feature request
 description: Provide details for a feature
 labels: kind/enhancement
@@ -15,7 +6,8 @@ body:
     id: feature
     attributes:
       label: What would you like to be added?
-      description: Describe functionality of the feature you request.
+      description: Describe detailed functionality of the feature you request.
+    validations:      
       required: true
 
   - type: textarea
