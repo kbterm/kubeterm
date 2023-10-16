@@ -16,6 +16,14 @@ Kubeterm is a graphical (GUI) management tool for kubernetes cluster, and provid
 
 - Download released version.
 
+<a href='https://apps.apple.com/us/app/kubeterm-kubernetes-client/id6450548861'>
+  <img alt='Get it on Google Play' src='https://raw.githubusercontent.com/steverichey/google-play-badge-svg/master/img/en_get.svg' width='160'/>
+</a>
+
+<a href="https://play.google.com/store/apps/details?id=com.kubeterm">
+  <img alt='Get it on AppStore' src='https://developer.apple.com/news/images/download-on-the-app-store-badge.png' width='160'>
+</a>
+
 ## Contact us
 
 - Create and track [issues](https://github.com/kbterm/kubeterm/issues).
