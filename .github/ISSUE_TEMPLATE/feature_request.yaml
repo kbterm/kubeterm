@@ -10,17 +10,18 @@ body:
       options:
         - Android
         - IOS
-        - Macos
-      default: 0
+        - macOS
     validations:
       required: true
+      
   - type: textarea
     id: feature
     attributes:
       label: What would you like to be added?
-      description: Describe detailed functionality of this feature you request.
+      description: Detailed functionality of this feature you request.
     validations:
       required: true
+      
   - type: textarea
     id: rationale
     attributes:
