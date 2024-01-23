@@ -18,14 +18,17 @@ body:
     validations:
       required: true
 
-  - type: textarea
+  - type: dropdown
     id: platform
     attributes:
-      label: Platform OS type
-      description: Please provide OS type, ios, android, macos, etc.
+      label: Platform
+      options:
+        - Android
+        - IOS
+        - Macos
     validations:
       required: true
-
+      
   - type: textarea
     id: cloudProvider
     attributes:
