@@ -2,14 +2,25 @@ name: Feature request
 description: Request a new feature
 labels: kind/enhancement
 body:
+  - type: dropdown
+    id: platform
+    attributes:
+      label: Platform
+      description: What platform are you requresting?
+      options:
+        - Android
+        - IOS
+        - Macos
+      default: 0
+    validations:
+      required: true
   - type: textarea
     id: feature
     attributes:
       label: What would you like to be added?
       description: Describe detailed functionality of this feature you request.
-    validations:      
+    validations:
       required: true
-
   - type: textarea
     id: rationale
     attributes:
