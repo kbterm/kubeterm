@@ -10,6 +10,7 @@ body:
         - Android
         - IOS
         - macOS
+      default: 0
     validations:
       required: true
       
