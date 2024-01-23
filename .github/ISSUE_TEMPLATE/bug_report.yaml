@@ -2,22 +2,6 @@ name: Bug Report
 description: File a bug report
 labels: kind/bug
 body:
-  - type: textarea
-    id: problem
-    attributes:
-      label: What happened?
-      description: Please provide details about the bug.
-    validations:      
-      required: true
-
-  - type: textarea
-    id: version
-    attributes:
-      label: App version
-      description: Please provide App version, Settings -> About.
-    validations:
-      required: true
-
   - type: dropdown
     id: platform
     attributes:
@@ -25,7 +9,23 @@ body:
       options:
         - Android
         - IOS
-        - Macos
+        - macOS
+    validations:
+      required: true
+      
+  - type: textarea
+    id: problem
+    attributes:
+      label: What happened?
+      description: Details about the bug.
+    validations:      
+      required: true
+
+  - type: textarea
+    id: version
+    attributes:
+      label: App version
+      description: Get version in app (Settings -> About).
     validations:
       required: true
       
@@ -33,6 +33,6 @@ body:
     id: cloudProvider
     attributes:
       label: Cloud provider
-      description: Please provide cloud provider, if the bug is related to a cluster of some cloud provider.
+      description: Add cloud provider name here, if the bug related to a cloud provider's cluster.
     validations:
       required: false
