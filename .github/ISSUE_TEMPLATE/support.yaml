@@ -2,6 +2,18 @@ name: Support Request
 description: Support request or question
 labels: kind/question
 body:
+  - type: dropdown
+    id: platform
+    attributes:
+      label: Platform
+      description: What platform are you requresting?
+      options:
+        - Android
+        - IOS
+        - macOS
+    validations:
+      required: true
+      
   - type: textarea
     id: question
     attributes:
