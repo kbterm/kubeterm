@@ -14,14 +14,14 @@ Kubeterm is a graphical (GUI) management tool for kubernetes cluster, and provid
 
 ## Get started
 
-- Download Kubeterm on ios and android:
+- Download Kubeterm on mobile devices:
 
     <a href="https://apps.apple.com/us/app/kubeterm-kubernetes-client/id6450548861"><img src="https://developer.apple.com/news/images/download-on-the-app-store-badge.png" alt="Get it on AppStore" width='120px'/></a>
     <a href='https://play.google.com/store/apps/details?id=com.kubeterm'><img alt='Get it on Google Play' src='https://upload.wikimedia.org/wikipedia/commons/7/78/Google_Play_Store_badge_EN.svg' width='135px' /></a>
 
 <br>
 
-- Download Kubeterm on macOS and Windows:
+- Download Kubeterm on desktop:
 
     [Latest releases](https://github.com/kbterm/kubeterm/releases/latest)
 
