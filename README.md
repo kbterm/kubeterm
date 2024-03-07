@@ -27,7 +27,7 @@ Kubeterm is a graphical (GUI) management tool for kubernetes cluster, and provid
 
  <br>
 
-- Kubeterm for macOS is also avaiable on App Store:
+- Kubeterm for macOS is also available on App Store:
 
     <a href="https://apps.apple.com/us/app/kubeterm-kubernetes-client/id6450548861"><img src="https://developer.apple.com/news/images/download-on-the-app-store-badge.png" alt="Get it on AppStore" width='120px'/></a>
 
