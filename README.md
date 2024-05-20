@@ -4,7 +4,10 @@ Kubeterm is a graphical (GUI) management tool for kubernetes cluster and applica
 
 ## Features
 
-- Import clusters from multiple sources: reading local kubeconfig, or loading by cluster credentials from cloud provider( AWS secret access key, GCP Service Account, Azure service principal, etc), or just login with your cloud provider account.
+- Import clusters in multiple ways:
+  - Read local kubeconfig
+  - Import through credentials of cluster, such as AWS secret access key, GCP service account, or Azure service principal.
+  - Login with your cloud provider ( GCP and Azure ) account which manage k8s cluster.
 - View & check cluster status.
 - List & describe details of kubernetes resource, just like *kubectl*.
 - Maintain kubernete resource: create, edit and delete resource.
