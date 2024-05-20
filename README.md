@@ -10,6 +10,7 @@ Kubeterm is a graphical (GUI) management tool for kubernetes cluster, and provid
 - Inspect container's log.
 - Exec command on container.
 - View resource (CPU/memory) metrics.
+- Helm Charts operations: Install, uninstall, upgrade and rollback.
 - Multiple platform supported, including mobile and desktop.
 
 ## Get started
