@@ -1,10 +1,8 @@
 # Kubeterm
 
-Kubeterm is a graphical (GUI) management tool for kubernetes cluster and Helm charts/releases, which provides a good visibility into kubernetes cluster to ease user's operation & troubleshooting.
+Kubeterm is a graphical (GUI) management tool for kubernetes clusters. It provides a good visibility into kubernetes cluster to enable user manage cluster resource and applications easily, and do troubleshooting actions.
 
-<div align="center">
-	<img src="images/screenshot.png">
-</div>
+![screenshot](images/screenshot.png)
 
 ## Features
 
