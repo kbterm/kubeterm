@@ -1,23 +1,23 @@
 # Kubeterm
 
-Kubeterm is a graphical (GUI) management tool for kubernetes clusters. It provides a good visibility into kubernetes cluster to enable user manage cluster resource and applications easily, and do troubleshooting actions.
+Kubeterm is a graphical (GUI) management tool for kubernetes clusters. It provides good visibility into kubernetes cluster to enable user manage cluster resource and applications easily, and do troubleshooting actions.
 
-As a application runnning locally, it doesn't require installation into your cluster. Multiple platforms, including desktop and mobile device, are supported.
+As a application runnning locally, it doesn't require anything installed in the cluster. Multiple platforms, including desktop and mobile device, are supported.
 
 ![screenshot](images/screenshot.png)
 
 ## Features
 
-- Import and manage clusters:
-  - Load local kubeconfig.
-  - Import cluster by credentials, including AWS secret access key, GCP service account, and Azure service principal.
-  - Login with your account of cloud provider ( GCP and Azure ) which host your kubernetes cluster.
-- Cluster dashboard, view cluster status and resource statistics.
-- List & describe details of kubernetes resource, just like *kubectl*.
-- Manage kubernete resource: create, edit and delete resource, as well as many resource operations, such as scaling, restart, node cordon/uncordon/drain, etc.
+- Cluster import and management:
+  - Load default kubeconfig automatically without any additinal configuration.
+  - Support to import cluster by cluster access credentials, including AWS secret access key, GCP service account, and Azure service principal.
+  - Integrated with cloud provider account( GCP and Azure ), import cluster conveniently by login with your cloud account.
+- Cluster dashboard, cluster status and resource statistics.
+- List & describe kubernetes resource, just like *kubectl*.
+- Manage kubernete resource: create, edit and delete resource. Support many resource operations, such as scaling, restart, node cordon/uncordon/drain, etc.
 - View resource (CPU/memory) metrics.
 - Inspect container's log.
-- Exec command on container.
+- Exec command within container.
 - Install and manage Helm charts/release: install, uninstall, upgrade and rollback.
 - Multiple platforms supported, mobile and desktop.
 
