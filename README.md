@@ -2,7 +2,7 @@
 
 Kubeterm is a graphical (GUI) management tool for kubernetes clusters. It provides a good visibility into kubernetes cluster to enable user manage cluster resource and applications easily, and do troubleshooting actions.
 
-Running as a local application, it doesn't require anything installed into your cluster. Multiple platforms, including desktop and mobile device, are supported.
+As a application runnning locally, it doesn't require installation into your cluster. Multiple platforms, including desktop and mobile device, are supported.
 
 ![screenshot](images/screenshot.png)
 
