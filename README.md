@@ -8,14 +8,14 @@ As a application runnning locally, it doesn't require anything installed in the 
 
 ## Features
 
-- Cluster import and management:
+- Cluster management:
   - Load default kubeconfig automatically without any additinal configuration.
   - Support to import cluster by cluster access credentials, including AWS secret access key, GCP service account, and Azure service principal.
   - Integrated with cloud provider account( GCP and Azure ), import cluster conveniently by login with your cloud account.
-- Cluster dashboard, cluster status and resource statistics.
+- Cluster dashboard: cluster status and resource statistics.
 - List & describe kubernetes resource, just like *kubectl*.
-- Manage kubernete resource: create, edit and delete resource. Support many resource operations, such as scaling, restart, node cordon/uncordon/drain, etc.
-- View resource (CPU/memory) metrics.
+- Manage kubernete resource: create, edit and delete resource. Support all operations, such as scaling, restart, node cordon/uncordon/drain, etc.
+- View resource (CPU/memory) metrics. (kubernetes metrics server required)
 - Inspect container's log.
 - Exec command within container.
 - Install and manage Helm charts/release: install, uninstall, upgrade and rollback.
