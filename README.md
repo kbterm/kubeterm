@@ -32,6 +32,8 @@ As a application runnning locally, it doesn't require anything installed in the 
 
     <a href="https://apps.apple.com/us/app/kubeterm-kubernetes-client/id6450548861"><img src="https://developer.apple.com/news/images/download-on-the-app-store-badge.png" alt="Get it on AppStore" width='120px'/></a>
 
+    > Due to restriction of Apple app sandbox, kubeterm can't exec credential plugin in kubeconfig. To support it, you may download releases under below link directly.
+  
 - Download latest release for desktop directly (macOS and Windows):
 
     [Latest releases](https://github.com/kbterm/kubeterm/releases/latest)
