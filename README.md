@@ -9,34 +9,33 @@ As a application runnning locally, it doesn't require anything installed in the 
 ## Features
 
 - Cluster management:
-  - Load default kubeconfig automatically without any additinal configuration.
-  - Support to import cluster by cluster access credentials, including AWS secret access key, GCP service account, and Azure service principal.
-  - Integrated with cloud provider account( GCP and Azure ), import cluster conveniently by login with your cloud account.
+  - Load local default kubeconfig automatically without additinal configuration.
+  - Integrated with cloud provider account( GCP and Azure ). You can import the cluster by just login with your cloud account. 
+  - Support cluster access credentials from cloud provider, including AWS secret access key, GCP service account, and Azure service principal.
 - Cluster dashboard: cluster status and resource statistics.
-- List & describe kubernetes resource, just like *kubectl*.
-- Manage kubernete resource: create, edit and delete resource. Support all operations, such as scaling, restart, node cordon/uncordon/drain, etc.
-- View resource (CPU/memory) metrics. (kubernetes metrics server required)
+- Resource Viewer: List & describe kubernetes resource, just like *kubectl*.
+- Resource operations: create, edit and delete resource, as well as many other operations, such as scaling, restart, node cordon/uncordon/drain, etc.
+- Resource metrics: CPU/memory, kubernetes metrics server installation required.
 - Inspect container's log.
-- Exec command within container.
-- Install and manage Helm charts/release: install, uninstall, upgrade and rollback.
+- Exec command in container.
+- Helm charts/release management: install, uninstall, upgrade and rollback.
 - Multiple platforms supported, mobile and desktop.
 
 ## Get started
+- Download for desktop (macOS and Windows):
+
+    [Latest releases](https://github.com/kbterm/kubeterm/releases/latest)
 
 - Download for mobile devices:
 
     <a href="https://apps.apple.com/us/app/kubeterm-kubernetes-client/id6450548861"><img src="https://developer.apple.com/news/images/download-on-the-app-store-badge.png" alt="Get it on AppStore" width='120px'/></a>
     <a href='https://play.google.com/store/apps/details?id=com.kubeterm'><img alt='Get it on Google Play' src='https://upload.wikimedia.org/wikipedia/commons/7/78/Google_Play_Store_badge_EN.svg' width='135px' /></a>
 
-- Download on App Store for macOS:
+- You also can download macOS version on App Store :
 
     <a href="https://apps.apple.com/us/app/kubeterm-kubernetes-client/id6450548861"><img src="https://developer.apple.com/news/images/download-on-the-app-store-badge.png" alt="Get it on AppStore" width='120px'/></a>
 
-    > Due to restriction of Apple app sandbox, kubeterm can't exec credential plugin in kubeconfig. To support it, you may download releases under below link directly.
-  
-- Download latest release for desktop directly (macOS and Windows):
-
-    [Latest releases](https://github.com/kbterm/kubeterm/releases/latest)
+    > Currently, due to restriction of Apple app sandbox, macOS version from Apple Store can't execute credential plugin used in kubeconfig. If you are using such authentication, please download available releases from github directly.
 
 
 
