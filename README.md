@@ -9,7 +9,7 @@ As a application runnning locally, it doesn't require anything installed in the 
 ## Features
 
 - Cluster management:
-  - Load local default kubeconfig automatically without additinal configuration.
+  - Defaut kubeconfig is loaded automatically without additinal configuration.
   - Integrated with cloud provider account( GCP and Azure ). You can import the cluster by just login with your cloud account. 
   - Support cluster access credentials from cloud provider, including AWS secret access key, GCP service account, and Azure service principal.
 - Cluster dashboard: cluster status and resource statistics.
