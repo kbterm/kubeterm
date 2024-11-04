@@ -19,6 +19,7 @@ As a application runnning locally, it doesn't require anything installed in the 
 - Inspect container's log.
 - Exec command in container.
 - Debug Pod with running a debugging container.
+- Port forwarding, forward requests to pod.
 - Helm charts/release management: install, uninstall, upgrade and rollback.
 - Multiple platforms supported, mobile and desktop.
 
