@@ -12,6 +12,7 @@ As a application runnning locally, it doesn't require anything installed in the 
   - Defaut kubeconfig is loaded automatically without additinal configuration.
   - Integrated with cloud provider account( GCP and Azure ). You can import the cluster by just login with your cloud account. 
   - Support cluster access credentials from cloud provider, including AWS secret access key, GCP service account, and Azure service principal.
+  - OIDC authentication supported without additional auth plugin, by reading auth-provider of user from kubeconfig directly. [example](https://github.com/kbterm/kubeterm/issues/9#issuecomment-2480673477)
 - Cluster dashboard: cluster status and resource statistics.
 - Resource Viewer: List & describe kubernetes resource, just like *kubectl*.
 - Resource operations: create, edit and delete resource, as well as many other operations, such as scaling, restart, node cordon/uncordon/drain, etc.
@@ -39,6 +40,7 @@ As a application runnning locally, it doesn't require anything installed in the 
 
     > Currently, due to restriction of Apple app sandbox, macOS version from Apple Store can't execute credential plugin used in kubeconfig. If you are using such authentication, please download available releases from github directly.
 
+## FAQ
 
 
 ## Contact us
