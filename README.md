@@ -12,14 +12,15 @@ As a application runnning locally, it doesn't require anything installed in the 
   - Defaut kubeconfig is loaded automatically without additinal configuration.
   - Integrated with cloud provider account( GCP and Azure ). You can import the cluster by just login with your cloud account. 
   - Support cluster access credentials from cloud provider, including AWS secret access key, GCP service account, and Azure service principal.
-  - OIDC authentication supported without additional auth plugin, by reading auth-provider of user from kubeconfig directly. [example](https://github.com/kbterm/kubeterm/issues/9#issuecomment-2480673477)
+  - Built-in OIDC authentication supporting. It reads fileld auth-provider of user from kubeconfig. [example](https://github.com/kbterm/kubeterm/issues/9#issuecomment-2480673477)
 - Cluster dashboard: cluster status and resource statistics.
 - Resource Viewer: List & describe kubernetes resource, just like *kubectl*.
 - Resource operations: create, edit and delete resource, as well as many other operations, such as scaling, restart, node cordon/uncordon/drain, etc.
 - Resource metrics: CPU/memory, kubernetes metrics server installation required.
-- Inspect container's log.
+- Inspect container's log, including searching, highlighting, and downloading logs, etc.
 - Exec command in container.
-- Debug Pod with running a debugging container.
+- Debug Node or Pod with running a debugging container.
+- Copy files from/to Pod.
 - Port forwarding, forward requests to pod.
 - Helm charts/release management: install, uninstall, upgrade and rollback.
 - Multiple platforms supported, mobile and desktop.
@@ -38,7 +39,7 @@ As a application runnning locally, it doesn't require anything installed in the 
 
     <a href="https://apps.apple.com/us/app/kubeterm-kubernetes-client/id6450548861"><img src="https://developer.apple.com/news/images/download-on-the-app-store-badge.png" alt="Get it on AppStore" width='120px'/></a>
 
-    > Currently, due to restriction of Apple app sandbox, macOS version from Apple Store can't execute credential plugin used in kubeconfig. If you are using such authentication, please download available releases from github directly.
+    > Currently, due to restriction of Apple app sandbox, the version downloaded from Apple Store doesn't support executing credential plugin in kubeconfig, please get versions from github directly if you need such functionality.
 
 ## FAQ
 
