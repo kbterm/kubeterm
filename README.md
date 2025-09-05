@@ -13,8 +13,8 @@ As a application runnning locally, it doesn't require anything installed in the 
   - Integrated with cloud provider account( GCP and Azure ). You can import the cluster by just login with your cloud account. 
   - Support cluster access credentials from cloud provider, including AWS secret access key, GCP service account, and Azure service principal.
   - Built-in OIDC authentication supporting. It reads fileld auth-provider of user from kubeconfig. [example](https://github.com/kbterm/kubeterm/issues/9#issuecomment-2480673477)
-- Cluster dashboard: cluster status and resource statistics.
-- Resource Viewer: List & describe kubernetes resource, just like *kubectl*.
+- Cluster dashboard: cluster status and resource metrics.
+- Resource Viewer: List & describe detials of kubernetes resource.
 - Resource operations: create, edit and delete resource, as well as many other operations, such as scaling, restart, node cordon/uncordon/drain, etc.
 - Resource metrics: CPU/memory, kubernetes metrics server installation required.
 - Inspect container's log, including searching, highlighting, and downloading logs, etc.
