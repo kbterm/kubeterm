@@ -14,15 +14,13 @@ It supports multiple platforms, including desktop and mobile devices.
   - Integrates with cloud provider accounts (GCP and Azure) to import clusters by simply logging in.  
   - Supports cloud provider credentials, including AWS secret access keys, GCP service accounts, and Azure service principals.  
   - Provides built-in OIDC authentication by reading the `auth-provider` field from the `user` section of the kubeconfig. [Example](https://github.com/kbterm/kubeterm/issues/9#issuecomment-2480673477)
-
 - **Cluster dashboard:** View cluster status and resource metrics (requires kubernetes metrics server).
-- **Resource Viewer:** List and describe detials of kubernetes resource.
+- **Resource Viewer:** List and describe detials of kubernetes resource, including custom resources.
 - **Resource operations:** Create, edit and delete resource, as well as advanced operations such as scaling, restart, node cordon/uncordon/drain.
 - **Debugging:**
   -  Debug Node or Pod by running an ephemeral container.
   -  Run commands directly inside containers.
   -  Inspect container's logs with searching, highlighting, and download support.
-
 - **File transfer:** Copy files from/to Pod.
 - **Port forwarding:** Forward local requests to Pod/Service.
 - **Helm management:** Install, uninstall, upgrade and rollback Helm charts/releases.
