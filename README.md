@@ -1,45 +1,51 @@
 # Kubeterm
 
-Kubeterm is a graphical management tool for kubernetes clusters. It provides good visibility into kubernetes cluster to enable user manage cluster resource and applications easily, and do troubleshooting actions.
+Kubeterm is a graphical management tool for kubernetes clusters.
+It provides clear visibility into your clusters, enable users to manage cluster resource and applications easily, as well as perform troubleshooting actions.
 
-As a application runnning locally, it doesn't require anything installed in the cluster. Multiple platforms, including desktop and mobile device, are supported.
-
+As a local runnning application, kubeterm doesn't require anything installed into the cluster.
+It supports multiple platforms, including desktop and mobile devices.
 ![screenshot](images/screenshot.png)
 
 ## Features
 
-- Cluster management:
-  - Defaut kubeconfig is loaded automatically without additinal configuration.
-  - Integrated with cloud provider account( GCP and Azure ). You can import the cluster by just login with your cloud account. 
-  - Support cluster access credentials from cloud provider, including AWS secret access key, GCP service account, and Azure service principal.
-  - Built-in OIDC authentication supporting. It reads fileld auth-provider of user from kubeconfig. [example](https://github.com/kbterm/kubeterm/issues/9#issuecomment-2480673477)
-- Cluster dashboard: cluster status and resource metrics.
-- Resource Viewer: List & describe detials of kubernetes resource.
-- Resource operations: create, edit and delete resource, as well as many other operations, such as scaling, restart, node cordon/uncordon/drain, etc.
-- Resource metrics: CPU/memory, kubernetes metrics server installation required.
-- Inspect container's log, including searching, highlighting, and downloading logs, etc.
-- Exec command in container.
-- Debug Node or Pod with running a debugging container.
-- Copy files from/to Pod.
-- Port forwarding, forward requests to pod.
-- Helm charts/release management: install, uninstall, upgrade and rollback.
-- Multiple platforms supported, mobile and desktop.
+- **Cluster Access & Authentication:**
+  - Automatically loads the default kubeconfig with zero configuration.  
+  - Integrates with cloud provider accounts (GCP and Azure) to import clusters by simply logging in.  
+  - Supports cloud provider credentials, including AWS secret access keys, GCP service accounts, and Azure service principals.  
+  - Provides built-in OIDC authentication by reading the `auth-provider` field from the `user` section of the kubeconfig. [Example](https://github.com/kbterm/kubeterm/issues/9#issuecomment-2480673477)
+
+- **Cluster dashboard:** View cluster status and resource metrics (requires kubernetes metrics server).
+- **Resource Viewer:** List and describe detials of kubernetes resource.
+- **Resource operations:** Create, edit and delete resource, as well as advanced operations such as scaling, restart, node cordon/uncordon/drain.
+- **Debugging:**
+  -  Debug Node or Pod by running an ephemeral container.
+  -  Run commands directly inside containers.
+  -  Inspect container's logs with searching, highlighting, and download support.
+
+- **File transfer:** Copy files from/to Pod.
+- **Port forwarding:** Forward local requests to Pod/Service.
+- **Helm management:** Install, uninstall, upgrade and rollback Helm charts/releases.
+- **Cross-platform support:** Available on both mobile and desktop.
+- **Data sync:** Sync kubeconfig across multiple clients via iCloud (iOS/MacOS).
 
 ## Get started
-- Download for desktop (macOS and Windows):
 
-    [Latest releases](https://github.com/kbterm/kubeterm/releases/latest)
+- **Download for desktop (macOS and Windows):**
 
-- Download for mobile devices:
+  👉 [Latest releases](https://github.com/kbterm/kubeterm/releases/latest)
 
-    <a href="https://apps.apple.com/us/app/kubeterm-kubernetes-client/id6450548861"><img src="https://developer.apple.com/news/images/download-on-the-app-store-badge.png" alt="Get it on AppStore" width='120px'/></a>
-    <a href='https://play.google.com/store/apps/details?id=com.kubeterm'><img alt='Get it on Google Play' src='https://upload.wikimedia.org/wikipedia/commons/7/78/Google_Play_Store_badge_EN.svg' width='135px' /></a>
+- **Download for mobile devices:**
 
-- You also can download macOS version on App Store :
+  <a href="https://apps.apple.com/us/app/kubeterm-kubernetes-client/id6450548861"><img src="https://developer.apple.com/news/images/download-on-the-app-store-badge.png" alt="Get it on AppStore" width='120px'/></a>
+  <a href='https://play.google.com/store/apps/details?id=com.kubeterm'><img alt='Get it on Google Play' src='https://upload.wikimedia.org/wikipedia/commons/7/78/Google_Play_Store_badge_EN.svg' width='135px' /></a>
 
-    <a href="https://apps.apple.com/us/app/kubeterm-kubernetes-client/id6450548861"><img src="https://developer.apple.com/news/images/download-on-the-app-store-badge.png" alt="Get it on AppStore" width='120px'/></a>
+- **Download macOS version from App Store:**
 
-    > Currently, due to restriction of Apple app sandbox, the version downloaded from Apple Store doesn't support executing credential plugin in kubeconfig, please get versions from github directly if you need such functionality.
+  <a href="https://apps.apple.com/us/app/kubeterm-kubernetes-client/id6450548861"><img src="https://developer.apple.com/news/images/download-on-the-app-store-badge.png" alt="Get it on AppStore" width='120px'/></a>
+
+  > ⚠️ **Note:** Due to Apple App Sandbox restrictions, the macOS version downloaded from the App Store does **not** support executing credential plugins in kubeconfig.  
+  > If you need this functionality, please download the macOS version directly from [GitHub Releases](https://github.com/kbterm/kubeterm/releases/latest).
 
 ## FAQ
 
@@ -47,5 +53,5 @@ As a application runnning locally, it doesn't require anything installed in the 
 ## Contact us
 
 - Create and track [issues](https://github.com/kbterm/kubeterm/issues).
-- Join us on [Discord](https://discord.gg/Jv4zEEBMR2)
-- Follow us on [Twitter](https://twitter.com/kubeterm)
+- Join us on [Discord](https://discord.gg/Jv4zEEBMR2).
+- Follow us on [X](https://x.com/kubeterm).
