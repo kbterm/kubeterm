@@ -20,7 +20,7 @@ It supports multiple platforms, including desktop and mobile devices.
 - **Debugging:**
   -  Debug Node or Pod by running an ephemeral container.
   -  Run commands directly inside containers.
-  -  Inspect container's logs with searching, highlighting, and download support.
+  -  Inspect container's logs with searching, highlighting, tailing or downloading to local.
 - **File transfer:** Copy files from/to Pod.
 - **Port forwarding:** Forward local requests to Pod/Service.
 - **Helm management:** Install, uninstall, upgrade and rollback Helm charts/releases.
