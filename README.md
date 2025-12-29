@@ -29,21 +29,32 @@ It supports multiple platforms, including desktop and mobile devices.
 
 ## Get started
 
-- **Download for desktop (macOS and Windows):**
+### Mobile version
 
-  👉 [Latest releases](https://github.com/kbterm/kubeterm/releases/latest)
-
-- **Download for mobile devices:**
+- **Download on mobile devices:**
 
   <a href="https://apps.apple.com/us/app/kubeterm-kubernetes-client/id6450548861"><img src="https://developer.apple.com/news/images/download-on-the-app-store-badge.png" alt="Get it on AppStore" width='120px'/></a>
   <a href='https://play.google.com/store/apps/details?id=com.kubeterm'><img alt='Get it on Google Play' src='https://upload.wikimedia.org/wikipedia/commons/7/78/Google_Play_Store_badge_EN.svg' width='135px' /></a>
+
+
+### Desktop version (macOS and Windows)
+
+- **Download from Github releases:**
+
+  [Latest releases](https://github.com/kbterm/kubeterm/releases/latest)
 
 - **Download macOS version from App Store:**
 
   <a href="https://apps.apple.com/us/app/kubeterm-kubernetes-client/id6450548861"><img src="https://developer.apple.com/news/images/download-on-the-app-store-badge.png" alt="Get it on AppStore" width='120px'/></a>
 
-  > ⚠️ **Note:** Due to Apple App Sandbox restrictions, the macOS version downloaded from the App Store does **not** support executing credential plugins in kubeconfig.  
-  > If you need this functionality, please download the macOS version directly from [GitHub Releases](https://github.com/kbterm/kubeterm/releases/latest).
+  > ⚠️ **Note:** Due to Apple App Sandbox restrictions, this version **cannot** execute credential plugins in kubeconfig.  
+  > If you need this functionality, please download the macOS version directly from [GitHub Releases](https://github.com/kbterm/kubeterm/releases/latest), or install by Homebrew.
+
+- **Install macOS version by Homebrew:**
+
+  ```
+  brew install --cask kubeterm
+  ```
 
 ## FAQ
 
