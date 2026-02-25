@@ -11,6 +11,8 @@ body:
         - Android
         - IOS
         - macOS
+        - Windows
+        - Linux
     validations:
       required: true
       
