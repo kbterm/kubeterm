@@ -27,6 +27,7 @@ It supports multiple platforms, including desktop and mobile devices.
   -  Inspect container's logs with searching, highlighting, tailing or downloading to local.
 - **File transfer:** Copy files from/to Pod.
 - **Port forwarding:** Forward local requests to Pod/Service.
+- **Pod file browser:** — Open file browser on pod directly in the app.
 - **Helm management:** Install, uninstall, upgrade and rollback Helm charts/releases.
 - **Cross-platform support:** Available on both mobile and desktop.
 - **Data sync:** Sync kubeconfig across multiple clients via iCloud (iOS/MacOS).
