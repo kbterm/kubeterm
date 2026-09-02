@@ -86,7 +86,7 @@ Kubeterm 会接触集群凭证，因此有必要明确说明你的数据流向�
 
 - **集群数据保留在本机。** kubeconfig 和云厂商凭证均在本地读取和存储，Kubeterm 直接与集群的 API Server 通信（如果你配置了 Prometheus，也会直接与你自己的 Prometheus 通信），链路中不存在任何 Kubeterm 服务器。
 - **无遥测数据。** Kubeterm 不收集任何使用数据、分析数据或崩溃报告。
-- **AI 助手是唯一的对外例外。** 使用时，请求所需的上下文会从你的机器直接发送给你所配置的 AI 服务商 —— Anthropic、OpenAI、Gemini、DeepSeek 或 Ollama —— 并使用你自己的 API key 进行认证。
+- **AI 助手是唯一的对外例外。** 使用时，请求所需的上下文会从你的机器直接发送给你所配置的 AI 服务商 —— Anthropic、OpenAI、Gemini 或 DeepSeek —— 并使用你自己的 API key 进行认证。
 - **修改类操作需要授权。** AI 助手在执行任何会改变集群状态的操作前，都必须先征求你的同意。
 - **可选的 iCloud 同步。** 如果你在 iOS/macOS 上启用了 kubeconfig 同步，数据会通过你自己的 iCloud 账号传输。该功能默认关闭，需手动开启。
 - **macOS 版本经过 Apple 签名与公证。**
@@ -95,6 +95,12 @@ Kubeterm 会接触集群凭证，因此有必要明确说明你的数据流向�
 ## 常见问题
 
 解答见 [FAQ](FAQ.zh-CN.md)。
+
+
+## 用户案例
+
+在团队中使用 Kubeterm？欢迎把你的团队添加到 [ADOPTERS.md](ADOPTERS.md)，
+这有助于我们确定平台与功能的优先级，也能为正在评估 Kubeterm 的人提供参考。
 
 
 ## 联系我们

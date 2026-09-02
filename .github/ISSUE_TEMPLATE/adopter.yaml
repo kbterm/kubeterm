@@ -1,0 +1,49 @@
+name: Adopter
+description: Tell us your team is using Kubeterm
+title: "Adopter: <your organization>"
+labels: kind/adopter
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for letting us know! We'll add you to [ADOPTERS.md](https://github.com/kbterm/kubeterm/blob/main/ADOPTERS.md).
+        Everything you enter here is public — please don't include cluster endpoints, account IDs or kubeconfig contents.
+
+  - type: input
+    id: organization
+    attributes:
+      label: Organization
+      description: Company, team or project name, with a website link if you have one. Use "Anonymous" if you'd rather not be named but still want the use case counted.
+    validations:
+      required: true
+
+  - type: input
+    id: since
+    attributes:
+      label: Since
+      description: Roughly when you started using Kubeterm, e.g. 2025-06.
+    validations:
+      required: false
+
+  - type: dropdown
+    id: platform
+    attributes:
+      label: Platforms
+      description: Select all that your team uses.
+      multiple: true
+      options:
+        - Android
+        - IOS
+        - macOS
+        - Windows
+        - Linux
+    validations:
+      required: false
+
+  - type: textarea
+    id: usage
+    attributes:
+      label: How do you use Kubeterm?
+      description: One short sentence, if you'd like to add one.
+    validations:
+      required: false

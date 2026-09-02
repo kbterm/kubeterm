@@ -86,7 +86,7 @@ Kubeterm handles cluster credentials, so it's worth being explicit about where y
 
 - **Your cluster data stays on your machine.** Kubeconfigs and cloud provider credentials are read and stored locally, and Kubeterm talks directly to your clusters' API servers — and, if you configure it, to your own Prometheus. There is no Kubeterm server in the path.
 - **No telemetry.** Kubeterm collects no usage data, analytics, or crash reports.
-- **The AI Agent is the only outbound exception.** When you use it, the context for your request goes directly from your machine to the AI provider you configured — Anthropic, OpenAI, Gemini, DeepSeek, or Ollama — authenticated with your own API key.
+- **The AI Agent is the only outbound exception.** When you use it, the context for your request goes directly from your machine to the AI provider you configured — Anthropic, OpenAI, Gemini, or DeepSeek — authenticated with your own API key.
 - **Mutating actions require approval.** The AI Agent must ask before it runs anything that changes cluster state.
 - **Optional iCloud sync.** If you enable kubeconfig sync on iOS/macOS, it goes through your own iCloud account. It is off unless you turn it on.
 - **macOS builds are signed and notarized by Apple.**
@@ -95,6 +95,12 @@ Kubeterm handles cluster credentials, so it's worth being explicit about where y
 ## FAQ
 
 Common questions —  [FAQ](FAQ.md).
+
+
+## Adopters
+
+Using Kubeterm at work? Add your team to [ADOPTERS.md](ADOPTERS.md) — it helps us prioritize
+platforms and features, and helps others evaluating Kubeterm.
 
 
 ## Contact us
