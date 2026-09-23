@@ -12,7 +12,7 @@ Kubeterm 是一款图形化的 Kubernetes 集群管理工具。
 Kubeterm 作为本地应用运行，无需在集群中安装任何组件。
 支持桌面端与移动端等多个平台。
 
-![screenshot](images/screenshot.png)
+![screenshot](images/screenshot-dark.png)
 
 ## 功能特性
 

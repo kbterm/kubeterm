@@ -12,7 +12,7 @@ It provides clear visibility into your clusters, enables users to manage cluster
 As a locally running application, Kubeterm doesn't require anything installed into the cluster.
 It supports multiple platforms, including desktop and mobile devices.
 
-![screenshot](images/screenshot.png)
+![screenshot](images/screenshot-dark.png)
 
 ## Features
 
