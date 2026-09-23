@@ -1,0 +1,110 @@
+# Mirrors a published release's binaries into the R2 bucket behind
+# dl.kubeterm.com, which is what the website's download buttons point at.
+#
+# Lives in kbterm/kubeterm (where releases are published), not in the website
+# repo. Downloading the assets here is free and fast because the runner sits
+# next to them, which is why this hashes the real bytes rather than trusting
+# the digests the releases API reports.
+name: Mirror release to R2
+
+on:
+  release:
+    types: [published]
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: Release tag to mirror, e.g. v2.8.0 (for backfilling)
+        required: true
+
+concurrency: mirror-release-to-r2
+
+jobs:
+  mirror:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    env:
+      BUCKET: kubeterm-downloads
+      AWS_ACCESS_KEY_ID: ${{ secrets.R2_ACCESS_KEY_ID }}
+      AWS_SECRET_ACCESS_KEY: ${{ secrets.R2_SECRET_ACCESS_KEY }}
+      AWS_DEFAULT_REGION: auto
+      # aws-cli v2.23+ sends trailing CRC32 checksums that R2 rejects.
+      # https://developers.cloudflare.com/r2/examples/aws/aws-cli/
+      AWS_REQUEST_CHECKSUM_CALCULATION: when_required
+      AWS_RESPONSE_CHECKSUM_VALIDATION: when_required
+
+    steps:
+      - name: Resolve tag
+        id: rel
+        run: |
+          tag="${{ github.event.release.tag_name || inputs.tag }}"
+          [ -n "$tag" ] || { echo "no tag resolved"; exit 1; }
+          echo "tag=$tag"              >> "$GITHUB_OUTPUT"
+          echo "version=${tag#v}"      >> "$GITHUB_OUTPUT"
+
+      - name: Download assets
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          mkdir -p out
+          gh release download "${{ steps.rel.outputs.tag }}" \
+            --repo "${{ github.repository }}" --dir out --clobber
+          ls -lh out
+
+      - name: Generate SHA256SUMS.txt
+        working-directory: out
+        run: |
+          rm -f SHA256SUMS.txt
+          shopt -s nullglob
+          files=(*)
+          [ ${#files[@]} -gt 0 ] || { echo "release has no assets"; exit 1; }
+          # Written outside the asset directory and moved in afterwards. A
+          # redirect straight into `out` would create the file before the glob
+          # ran, and the checksums would include an entry for themselves.
+          sha256sum -- "${files[@]}" > "$RUNNER_TEMP/SHA256SUMS.txt"
+          mv "$RUNNER_TEMP/SHA256SUMS.txt" .
+          cat SHA256SUMS.txt
+
+      - name: Upload to R2
+        working-directory: out
+        run: |
+          endpoint="https://${{ secrets.R2_ACCOUNT_ID }}.r2.cloudflarestorage.com"
+          prefix="v${{ steps.rel.outputs.version }}"
+
+          content_type() {
+            case "$1" in
+              *.dmg)      echo application/x-apple-diskimage ;;
+              *.exe)      echo application/vnd.microsoft.portable-executable ;;
+              *.msi)      echo application/x-msi ;;
+              *.deb)      echo application/vnd.debian.binary-package ;;
+              *.AppImage) echo application/octet-stream ;;
+              *.txt)      echo 'text/plain; charset=utf-8' ;;
+              *)          echo application/octet-stream ;;
+            esac
+          }
+
+          for f in *; do
+            # Versioned keys are never rewritten, so they cache indefinitely.
+            aws s3 cp "$f" "s3://$BUCKET/$prefix/$f" \
+              --endpoint-url "$endpoint" \
+              --content-type "$(content_type "$f")" \
+              --cache-control "public, max-age=31536000, immutable"
+          done
+
+      - name: Verify public URLs
+        working-directory: out
+        run: |
+          prefix="v${{ steps.rel.outputs.version }}"
+          fail=0
+          for f in *; do
+            url="https://dl.kubeterm.com/$prefix/$f"
+            code=$(curl -so /dev/null -w '%{http_code}' -I --max-time 30 "$url")
+            len=$(curl -sI --max-time 30 "$url" | awk 'BEGIN{IGNORECASE=1}/^content-length:/{gsub(/\r/,"",$2);print $2}')
+            if [ "$code" = "200" ] && [ "${len:-0}" -eq "$(wc -c < "$f")" ]; then
+              echo "  ok    $f ($len bytes)"
+            else
+              echo "  FAIL  $f (HTTP $code, ${len:-0} bytes)"
+              fail=1
+            fi
+          done
+          exit $fail
