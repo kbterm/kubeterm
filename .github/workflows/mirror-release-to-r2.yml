@@ -1,5 +1,11 @@
-# Mirrors a published release's binaries into the R2 bucket behind
-# dl.kubeterm.com, which is what the website's download buttons point at.
+# Mirrors a published release's binaries into the root of the R2 bucket behind
+# dl.kubeterm.com and points latest.json at them. The website links to
+# dl.kubeterm.com/latest/<platform>, which the Worker in workers/dl-latest
+# redirects to the file latest.json names.
+#
+# Only one release is kept at the root. The previous one is deleted after
+# latest.json has moved off it, never before, so /latest/* never names a file
+# that is gone. To roll back, run this manually with the older tag.
 #
 # Lives in kbterm/kubeterm (where releases are published), not in the website
 # repo. Downloading the assets here is free and fast because the runner sits
@@ -13,13 +19,14 @@ on:
   workflow_dispatch:
     inputs:
       tag:
-        description: Release tag to mirror, e.g. v2.8.0 (for backfilling)
+        description: Release tag to publish as latest, e.g. v2.8.2 (an older tag rolls back)
         required: true
 
 concurrency: mirror-release-to-r2
 
 jobs:
   mirror:
+    if: github.event_name == 'workflow_dispatch' || !github.event.release.prerelease
     runs-on: ubuntu-latest
     permissions:
       contents: read
@@ -28,6 +35,7 @@ jobs:
       AWS_ACCESS_KEY_ID: ${{ secrets.R2_ACCESS_KEY_ID }}
       AWS_SECRET_ACCESS_KEY: ${{ secrets.R2_SECRET_ACCESS_KEY }}
       AWS_DEFAULT_REGION: auto
+      AWS_ENDPOINT_URL: https://${{ secrets.R2_ACCOUNT_ID }}.r2.cloudflarestorage.com
       # aws-cli v2.23+ sends trailing CRC32 checksums that R2 rejects.
       # https://developers.cloudflare.com/r2/examples/aws/aws-cli/
       AWS_REQUEST_CHECKSUM_CALCULATION: when_required
@@ -51,26 +59,52 @@ jobs:
             --repo "${{ github.repository }}" --dir out --clobber
           ls -lh out
 
-      - name: Generate SHA256SUMS.txt
+      - name: Generate checksums
         working-directory: out
         run: |
-          rm -f SHA256SUMS.txt
+          sums="SHA256SUMS-v${{ steps.rel.outputs.version }}.txt"
+          rm -f SHA256SUMS*.txt
           shopt -s nullglob
           files=(*)
           [ ${#files[@]} -gt 0 ] || { echo "release has no assets"; exit 1; }
           # Written outside the asset directory and moved in afterwards. A
           # redirect straight into `out` would create the file before the glob
           # ran, and the checksums would include an entry for themselves.
-          sha256sum -- "${files[@]}" > "$RUNNER_TEMP/SHA256SUMS.txt"
-          mv "$RUNNER_TEMP/SHA256SUMS.txt" .
-          cat SHA256SUMS.txt
+          sha256sum -- "${files[@]}" > "$RUNNER_TEMP/$sums"
+          mv "$RUNNER_TEMP/$sums" .
+          cat "$sums"
+
+      # Runs before anything is uploaded so a release missing a platform fails
+      # here, leaving the bucket and the current latest.json untouched.
+      - name: Build latest.json
+        working-directory: out
+        run: |
+          shopt -s nullglob
+          files='{}'
+          for entry in \
+            'macos=*-universal.dmg' \
+            'windows-exe=*.exe' \
+            'windows-msi=*.msi' \
+            'linux-deb=*.deb' \
+            'linux-appimage=*.AppImage' \
+            'checksums=SHA256SUMS-*.txt'
+          do
+            platform=${entry%%=*}
+            pattern=${entry#*=}
+            matches=($pattern)
+            if [ ${#matches[@]} -ne 1 ]; then
+              echo "expected one file matching $pattern, found ${#matches[@]}"
+              exit 1
+            fi
+            files=$(jq --arg k "$platform" --arg v "${matches[0]}" '. + {($k): $v}' <<< "$files")
+          done
+          jq -n --arg version "${{ steps.rel.outputs.version }}" --argjson files "$files" \
+            '{version: $version, files: $files}' > "$RUNNER_TEMP/latest.json"
+          cat "$RUNNER_TEMP/latest.json"
 
       - name: Upload to R2
         working-directory: out
         run: |
-          endpoint="https://${{ secrets.R2_ACCOUNT_ID }}.r2.cloudflarestorage.com"
-          prefix="v${{ steps.rel.outputs.version }}"
-
           content_type() {
             case "$1" in
               *.dmg)      echo application/x-apple-diskimage ;;
@@ -85,8 +119,7 @@ jobs:
 
           for f in *; do
             # Versioned keys are never rewritten, so they cache indefinitely.
-            aws s3 cp "$f" "s3://$BUCKET/$prefix/$f" \
-              --endpoint-url "$endpoint" \
+            aws s3 cp "$f" "s3://$BUCKET/$f" \
               --content-type "$(content_type "$f")" \
               --cache-control "public, max-age=31536000, immutable"
           done
@@ -94,17 +127,59 @@ jobs:
       - name: Verify public URLs
         working-directory: out
         run: |
-          prefix="v${{ steps.rel.outputs.version }}"
           fail=0
+          redirected=0
           for f in *; do
-            url="https://dl.kubeterm.com/$prefix/$f"
-            code=$(curl -so /dev/null -w '%{http_code}' -I --max-time 30 "$url")
-            len=$(curl -sI --max-time 30 "$url" | awk 'BEGIN{IGNORECASE=1}/^content-length:/{gsub(/\r/,"",$2);print $2}')
-            if [ "$code" = "200" ] && [ "${len:-0}" -eq "$(wc -c < "$f")" ]; then
+            url="https://dl.kubeterm.com/$f"
+            hdr=$(curl -sI --max-time 30 "$url" || true)
+            code=$(printf '%s' "$hdr" | awk 'BEGIN{IGNORECASE=1}/^HTTP\//{c=$2}END{gsub(/\r/,"",c);print c}')
+            len=$(printf '%s' "$hdr" | awk 'BEGIN{IGNORECASE=1}/^content-length:/{gsub(/\r/,"",$2);v=$2}END{print v+0}')
+            loc=$(printf '%s' "$hdr" | awk 'BEGIN{IGNORECASE=1}/^location:/{gsub(/\r/,"",$2);v=$2}END{print v}')
+            want=$(wc -c < "$f")
+
+            if [ "${code:-000}" = "200" ] && [ "$len" -eq "$want" ]; then
               echo "  ok    $f ($len bytes)"
-            else
-              echo "  FAIL  $f (HTTP $code, ${len:-0} bytes)"
-              fail=1
+              continue
             fi
+
+            if [ -n "$loc" ]; then
+              echo "  FAIL  $f (HTTP $code -> $loc)"
+              redirected=1
+            elif [ "${code:-000}" = "200" ]; then
+              echo "  FAIL  $f (200 but $len bytes, expected $want)"
+            else
+              echo "  FAIL  $f (HTTP ${code:-no response})"
+            fi
+            fail=1
           done
+
+          if [ "$redirected" = "1" ]; then
+            echo
+            echo "dl.kubeterm.com is redirecting instead of serving R2. The request is"
+            echo "being intercepted before it reaches the bucket - check the kubeterm.com"
+            echo "zone for a Redirect Rule, Page Rule or Bulk Redirect matching this host,"
+            echo "and confirm the R2 custom domain is bound and Active."
+          fi
           exit $fail
+
+      - name: Publish latest.json
+        run: |
+          aws s3 cp "$RUNNER_TEMP/latest.json" "s3://$BUCKET/latest.json" \
+            --content-type application/json \
+            --cache-control no-cache
+
+      - name: Delete previous release from bucket root
+        working-directory: out
+        run: |
+          aws s3api list-objects-v2 --bucket "$BUCKET" --delimiter / --output json \
+            | jq -r '.Contents[]?.Key' \
+            | while IFS= read -r key; do
+                # Only release files: anything else at the root was put there by hand.
+                case "$key" in
+                  *.dmg|*.exe|*.msi|*.deb|*.AppImage|SHA256SUMS*.txt) ;;
+                  *) continue ;;
+                esac
+                [ -e "$key" ] && continue
+                echo "delete $key"
+                aws s3 rm "s3://$BUCKET/$key"
+              done
