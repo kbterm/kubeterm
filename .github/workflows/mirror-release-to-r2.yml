@@ -42,27 +42,30 @@ jobs:
       AWS_RESPONSE_CHECKSUM_VALIDATION: when_required
 
     steps:
+      # The tag arrives through env, never pasted into the script, so a tag
+      # containing shell syntax stays data. It is checked before it reaches
+      # $GITHUB_ENV, where a newline in it could set any variable for later steps.
       - name: Resolve tag
-        id: rel
+        env:
+          TAG: ${{ github.event.release.tag_name || inputs.tag }}
         run: |
-          tag="${{ github.event.release.tag_name || inputs.tag }}"
-          [ -n "$tag" ] || { echo "no tag resolved"; exit 1; }
-          echo "tag=$tag"              >> "$GITHUB_OUTPUT"
-          echo "version=${tag#v}"      >> "$GITHUB_OUTPUT"
+          [[ $TAG =~ ^v[0-9]+\.[0-9]+\.[0-9]+$ ]] || { echo "refusing tag ${TAG//[^[:print:]]/?}"; exit 1; }
+          echo "TAG=$TAG"         >> "$GITHUB_ENV"
+          echo "VERSION=${TAG#v}" >> "$GITHUB_ENV"
 
       - name: Download assets
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
           mkdir -p out
-          gh release download "${{ steps.rel.outputs.tag }}" \
+          gh release download "$TAG" \
             --repo "${{ github.repository }}" --dir out --clobber
           ls -lh out
 
       - name: Generate checksums
         working-directory: out
         run: |
-          sums="SHA256SUMS-v${{ steps.rel.outputs.version }}.txt"
+          sums="SHA256SUMS-v$VERSION.txt"
           rm -f SHA256SUMS*.txt
           shopt -s nullglob
           files=(*)
@@ -98,7 +101,7 @@ jobs:
             fi
             files=$(jq --arg k "$platform" --arg v "${matches[0]}" '. + {($k): $v}' <<< "$files")
           done
-          jq -n --arg version "${{ steps.rel.outputs.version }}" --argjson files "$files" \
+          jq -n --arg version "$VERSION" --argjson files "$files" \
             '{version: $version, files: $files}' > "$RUNNER_TEMP/latest.json"
           cat "$RUNNER_TEMP/latest.json"
 
