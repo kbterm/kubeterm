@@ -30,6 +30,8 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: read
+    outputs:
+      version: ${{ steps.tag.outputs.version }}
     env:
       BUCKET: kubeterm-downloads
       AWS_ACCESS_KEY_ID: ${{ secrets.R2_ACCESS_KEY_ID }}
@@ -46,12 +48,14 @@ jobs:
       # containing shell syntax stays data. It is checked before it reaches
       # $GITHUB_ENV, where a newline in it could set any variable for later steps.
       - name: Resolve tag
+        id: tag
         env:
           TAG: ${{ github.event.release.tag_name || inputs.tag }}
         run: |
           [[ $TAG =~ ^v[0-9]+\.[0-9]+\.[0-9]+$ ]] || { echo "refusing tag ${TAG//[^[:print:]]/?}"; exit 1; }
           echo "TAG=$TAG"         >> "$GITHUB_ENV"
           echo "VERSION=${TAG#v}" >> "$GITHUB_ENV"
+          echo "version=${TAG#v}" >> "$GITHUB_OUTPUT"
 
       - name: Download assets
         env:
@@ -174,6 +178,27 @@ jobs:
       - name: Delete previous release from bucket root
         working-directory: out
         run: |
+          # The MSI of the release before this one survives. A winget manifest
+          # pins one exact URL per version and is never rewritten, and between a
+          # release and its winget PR merging - hours, sometimes days - winget
+          # still serves the PREVIOUS version. Deleting that MSI takes every
+          # `winget install` down for that whole window, not just installs of
+          # older versions. No other platform is referenced from winget, so
+          # nothing else is kept.
+          #
+          # Versions compare field by field as numbers: a lexical sort puts
+          # v2.10.0 before v2.9.0 and would keep the wrong one.
+          keep_msi=$(
+            aws s3api list-objects-v2 --bucket "$BUCKET" --delimiter / --output json \
+              | jq -r '.Contents[]?.Key' \
+              | sed -nE 's/^Kubeterm-v([0-9]+\.[0-9]+\.[0-9]+)-windows-x64\.msi$/\1/p' \
+              | grep -vFx "${TAG#v}" \
+              | sort -t. -k1,1n -k2,2n -k3,3n \
+              | tail -1
+          )
+          [ -n "$keep_msi" ] && keep_msi="Kubeterm-v$keep_msi-windows-x64.msi"
+          echo "keeping previous MSI: ${keep_msi:-none}"
+
           aws s3api list-objects-v2 --bucket "$BUCKET" --delimiter / --output json \
             | jq -r '.Contents[]?.Key' \
             | while IFS= read -r key; do
@@ -183,6 +208,39 @@ jobs:
                   *) continue ;;
                 esac
                 [ -e "$key" ] && continue
+                [ "$key" = "$keep_msi" ] && continue
                 echo "delete $key"
                 aws s3 rm "s3://$BUCKET/$key"
               done
+
+  # Submits the MSI to microsoft/winget-pkgs. Runs after the mirror job, so the
+  # installer is already live and wingetcreate can hash it; there is nothing to
+  # poll for. The URL is the root one the mirror job just uploaded, which the
+  # delete step keeps for one release beyond this one.
+  #
+  # `wingetcreate update` edits a package that already exists, so the first
+  # version had to be submitted by hand. It re-reads the MSI, which is why the
+  # ProductCode (regenerated on every build) needs no handling here.
+  #
+  # WINGET_PAT: a classic PAT with the `public_repo` scope, belonging to the
+  # account that owns the fork of microsoft/winget-pkgs.
+  winget:
+    name: Submit to winget-pkgs
+    needs: mirror
+    runs-on: windows-latest
+    steps:
+      - name: Submit manifest
+        shell: pwsh
+        env:
+          VERSION: ${{ needs.mirror.outputs.version }}
+        run: |
+          $url = "https://dl.kubeterm.com/Kubeterm-v$env:VERSION-windows-x64.msi"
+          Write-Host "version = $env:VERSION"
+          Write-Host "url     = $url"
+
+          Invoke-WebRequest -Uri https://aka.ms/wingetcreate/latest -OutFile wingetcreate.exe
+          .\wingetcreate.exe update Kubeterm.Kubeterm `
+            --version $env:VERSION `
+            --urls $url `
+            --submit `
+            --token "${{ secrets.WINGET_PAT }}"

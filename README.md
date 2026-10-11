@@ -118,4 +118,4 @@ The Kubeterm application is not open source.
 
 ## Copyright & License
 
-Copyright (c) 2025 kubeterm — the content of this repository is released under the MIT license.
+Copyright (c) 2025-2026 Kubeterm. All rights reserved.

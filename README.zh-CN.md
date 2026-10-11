@@ -118,4 +118,4 @@ Kubeterm 应用本身并非开源软件。
 
 ## 版权与许可
 
-Copyright (c) 2025 kubeterm —— 本仓库的内容以 MIT 许可证发布。
+Copyright (c) 2025-2026 Kubeterm. 保留所有权利。
