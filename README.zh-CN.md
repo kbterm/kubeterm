@@ -36,8 +36,8 @@ Kubeterm 作为本地应用运行，无需在集群中安装任何组件。
 - **文件传输：** 在 Pod 与本地之间复制文件。
 - **端口转发：** 将本地请求转发到 Pod/Service。
 - **Pod 文件浏览器：** 在应用内直接打开 Pod 的文件浏览器。
-- **Helm 管理：** 安装、卸载、升级和回滚 Helm chart/release。
-- **Argo CD** — 查看应用的健康状况和同步状态，按需同步应用，并对比不同manifest版本。
+- **Helm 管理：** 安装、卸载、升级和回滚 Helm chart/release，或直接对比不同manifest版本。
+- **Argo CD** — 查看应用的健康状况和同步状态，按需同步应用。
 - **Flux CD** — 查看 GitOps 部署状态，按需触发或暂停调谐。
 - **跨平台支持：** 移动端与桌面端均可使用。
 - **数据同步：** 通过 iCloud 在多个客户端之间同步 kubeconfig（iOS/macOS）。
