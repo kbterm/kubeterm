@@ -36,7 +36,9 @@ It supports multiple platforms, including desktop and mobile devices.
 - **File transfer:** Copy files from/to Pod.
 - **Port forwarding:** Forward local requests to Pod/Service.
 - **Pod file browser:** Open file browser on pod directly in the app.
-- **Helm management:** Install, uninstall, upgrade and rollback Helm charts/releases.
+- **Helm management:** Install, uninstall, upgrade and rollback Helm charts/releases. Compare rendered manifests between release revisions.
+- **Argo CD** — Monitor application health and sync status, and sync applications on demand.
+- **Flux CD** — Monitor GitOps deployments and trigger or pause reconciliation.
 - **Cross-platform support:** Available on both mobile and desktop.
 - **Data sync:** Sync kubeconfig across multiple clients via iCloud (iOS/macOS).
 
